@@ -1,7 +1,10 @@
 #include <stdio.h>
 
-int main(int argc, char const *argv[])
+int main(void)
 {
-    printf("Hello, world!");
+    int testInteger = 0;
+    printf("Enter an integer: ");
+    scanf("%d", &testInteger);  
+    printf("\nNumber =  %d", testInteger);
     return 0;
 }
