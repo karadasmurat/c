@@ -5,6 +5,7 @@
 void enum_basics();
 void array_basics();
 void no_initialization_garbage();
+void char_basics();
 
 int main(void){
 
@@ -36,11 +37,13 @@ int main(void){
     y = ++x;
     printf("x: %d, y: %d\n", x, y); // x: 11, y: 11
 
-    enum_basics();
+    char_basics();
 
-    array_basics();
+    // enum_basics();
 
-    no_initialization_garbage();
+    // array_basics();
+
+    // no_initialization_garbage();
 
     return 0;
 }
@@ -73,6 +76,8 @@ void no_initialization_garbage(){
 
 void array_basics(){
 
+    puts("\n--- array basics ---");
+
     // option 1
     // first declare the array with type, name and size, then initialize contents using index values
     int grades[3];
@@ -92,8 +97,8 @@ void array_basics(){
     // option 3 - dynamic memory allocation
     // point the address of first element
     int *years = malloc(3 * sizeof(int));
-    *years = 2019;
-    *(years + 1) = 2020;    // pointer arithmetic to get the next element
+    *years = 2019;          // *years  = value at the (go to) first address = years[0]
+    *(years + 1) = 2020;    // pointer arithmetic to get the value at the next address = years[1] (offset is 1)
     years[2] = 2022;        // index, to get the specific element
 
     printf("The address of first element: %p\n", years);
@@ -105,5 +110,34 @@ void array_basics(){
     // free memory
     free(years);
 
+}
+
+void char_basics(){
+
+    puts("\n--- char basics ---");
+
+    char initials_name = 'M';
+    char initials_surname = 'K';
+
+    printf("Initials: %c%c\n", initials_name, initials_surname);
+    printf("Initials as int: %d %d\n", initials_name, initials_surname);
+
+    // C Language does not support strings out of the box.
+    // Instead of strings, C uses an array of single characters.
+    // or initialize using double quotes
+    char name[] = "Murat"; // this actually is {'M','u','r','a','t','\0'};
+    
+    printf("name: %s\n", name);
+
+    // dynamic memory allocation
+    char *degree = malloc(3 * sizeof(char));
+    *degree = 'B';          // *degree = value at the (go to) first address = degree[0] (offset is zero)
+    *(degree + 1) = 'S';    // *(degree+1) = value of (go to) next address = degree[1] (offset is one)
+    degree[2] = 'c';
+
+    printf("Degree: %s\n", degree);
+
+
+    
 }
 
