@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
+#include <string.h>
 
 void enum_basics();
 void array_basics();
 void no_initialization_garbage();
 void char_basics();
+void print_reverse(char * s);
 
 int main(void){
 
@@ -82,6 +84,7 @@ void array_basics(){
     // first declare the array with type, name and size, then initialize contents using index values
     int grades[3];
     
+    //the name of the array is a pointer containing the address of initial element
     printf("The address of first element: %p\n", grades); // i.e. 0x16bb1324c
 
     grades[0] = 90;
@@ -95,7 +98,7 @@ void array_basics(){
 
 
     // option 3 - dynamic memory allocation
-    // point the address of first element
+    // allocate space and point the address of first element
     int *years = malloc(3 * sizeof(int));
     *years = 2019;          // *years  = value at the (go to) first address = years[0]
     *(years + 1) = 2020;    // pointer arithmetic to get the value at the next address = years[1] (offset is 1)
@@ -124,12 +127,36 @@ void char_basics(){
 
     // C Language does not support strings out of the box.
     // Instead of strings, C uses an array of single characters.
-    // or initialize using double quotes
-    char name[] = "Murat"; // this actually is {'M','u','r','a','t','\0'};
+
+    // initialize using double quotes
+    // Option 1: square braces []
+    char name[] = "Murat"; // this actually is {'M','u','r','a','t','\0'}; so 6 element array is used to store 5 charecter string.
     
     printf("name: %s\n", name);
 
+    // Option 2: USING A POINTER *
+    // string literals are designed to be constant, stored in read-only memory
+    // const modifier means that your compiler will complain if you try to modify an array with that particular variable.
+    const char *surname = "Karadas"; 
+
+    // if you want to modify a string, you need to make a copy in a new array.
+    // surname[0] = 'Q'; // BUS ERROR
+
+    // the variable "surname" points to the beginning of string
+    // in other words, it contains the ADDRESS of the FIRST character
+    printf("Address of the first character - surname: %p\n", surname); // ie. 0x10431ff28
+    printf("the first character - *surname  : %c\n", *surname); // K
+    printf("the first character - surname[0]: %c\n", *surname); // K
+    
+    // the char array (string)
+    printf("Surname, Name: %s, %s\n", surname, name);
+
+
+    // string.h functions
+    printf("Length of surname: %lu\n", strlen(surname));
+
     // dynamic memory allocation
+    // allocate space and point the address of first element
     char *degree = malloc(3 * sizeof(char));
     *degree = 'B';          // *degree = value at the (go to) first address = degree[0] (offset is zero)
     *(degree + 1) = 'S';    // *(degree+1) = value of (go to) next address = degree[1] (offset is one)
@@ -137,7 +164,28 @@ void char_basics(){
 
     printf("Degree: %s\n", degree);
 
+    print_reverse(surname);
 
+    // if string is an array of char: []
+    // array of string is an array of array of char: [][]
     
+}
+
+void print_reverse(char *str){
+
+    int len = 0;
+    len = strlen(str);
+    
+    // while(str[len] != '\0')
+    //     len++;
+    
+    char *tail = str + len - 1;
+
+    while(tail >= str){
+        printf("%c", *tail);
+        tail--;
+        //len--;
+    }
+
 }
 
