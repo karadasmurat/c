@@ -41,7 +41,7 @@ int main(void){
     // the value of p
     printf("p : %p\n", p); // i.e. 0x16d28b2a0
 
-    // Dereference: go to the address and get the value, using * operator
+    // Dereference: GO to the address and GET the value, using * operator
     printf("*p: %d\n", *p); // 10
 
     y = *p + 4;	// y is now 14
