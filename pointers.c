@@ -59,6 +59,7 @@ int main(void){
     printf("int   :Storage size: %zu bytes\n", sizeof(int)); // 4 bytes (32bits)
     printf("int * :Storage size: %zu bytes\n", sizeof(int *)); // 8 bytes (64bits)
 
+    // when you copy a pointer, you copy its value, which is an address value - the address it refers to. 
     copy_pointers();
 
     int scores[] = {95, 90,100};
@@ -79,7 +80,8 @@ int main(void){
     return 0;
 }
 
-// when you copy pointers, dereferencing any one of them alters the variable they point to!
+// when you copy a pointer, you copy its value, which is an address value - the address it refers to. 
+// dereferencing any one of them alters the variable they point to!
 void copy_pointers(){
 
     puts("copy_pointers>");

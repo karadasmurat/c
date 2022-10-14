@@ -1,10 +1,31 @@
 #include <stdio.h>
+#include <stdlib.h>
+
+typedef struct _node{
+    int data;
+    struct _node *next;
+} node;
 
 /* Function prototypes*/
 void increment_by_val(int arg);
 void increment_byref(int* arg);
+void modify_actual_parameter__primitive(int* arg);
+void modify_actual_parameter__pointer(node** arg);
 int sum(int a, int b, int result[]);
 
+/*
+By default, C uses call by value to pass arguments.
+
+Values of actual parameters (parameters passed to function) are COPIED to function’s formal parameters and 
+stored in different memory locations. 
+So any changes made inside functions are not reflected in actual parameters of the caller.
+
+But, when you pass the address of a variable, the local copy will have the same address as its value.
+Therefore, when dereferenced, it will change the actual parameter provided by calling function.
+
+the address of a variable : pointer : *
+the address of a pointer : pointer to pointer : **
+*/
 int main(void){
 
     int var = 0;
@@ -26,13 +47,13 @@ int main(void){
     int a = 90;
     int b = 95;
     int my_array[] = {0};
-
-    printf("main > Values before function call:\n");  
+ 
     printf("main > a: %d\n", a);    
     //printf("main > b: %d\n", b);                        // b: 95
     //printf("main > my_array[0]: %d\n", my_array[0]);    // my_array[0]: 0
 
-    increment(a);
+    // send the address of a primitive (pointer to it) to modify its value.
+    modify_actual_parameter__primitive(&a);
 
     printf("main > a: %d\n", a); 
 
@@ -41,9 +62,16 @@ int main(void){
     //printf("main > b: %d, result: %d\n", b, result);    // b: 95, result: 90
     //printf("main > my_array[0]: %d\n", my_array[0]);    // my_array[0]: 90
 
-    increment_byref(&a);
+    // allocate memory and get a pointer to it: list variable contains the beginning address.
+    node* list = (node*) malloc(sizeof(node));
 
-    printf("main > a: %d\n", a); 
+    printf("main > list: %p\n", list); 
+
+    // we have a pointer, and suppose we want to modify its value (address stored in this variable)
+    // send the address of this pointer 
+    modify_actual_parameter__pointer(&list);
+
+    printf("main > list: %p\n", list);  
 
 
 }
@@ -69,24 +97,38 @@ int sum(int a, int b, int r[]){
     return a + b;
 }
 
-void increment_by_val(int arg){
-    // a local copy of the argument is created. it has the same value
-    arg += 1;
-    printf("increment_by_val> arg: %d\n", arg);
-}
+// send the address of a primitive to modify its value.
+void modify_actual_parameter__primitive(int* arg){
 
-/* 
-* parameter declared as pointers and the operands are accessed indirectly through them 
-* (caller pass the addresses of its variables, and called can modify them directly through these addresses)
-*/
-void increment_by_ref(int *arg){
-    // a local copy of the argument is created. it has the same value, which is an address of int (pointer)
-    // when dereferenced, it changes "the same" variable anyways!
+    puts("modify_actual_parameter__primitive > begin."); 
+
+    // a local copy of arg is created. it has the same value, which is an address of int (pointer)
+    // when dereferenced, it changes "the same" primitive variable anyways!
     // when you copy pointers, dereferencing any one of them alters the variable they point to!
-    *arg += 1;
-    printf("increment_by_ref> arg: %d\n", *arg);
+
+    // dereference formal parameter to modify actual parameter provided by calling function
+    (*arg)++;
+
 }
 
+// send the address of a pointer to modify its value. (the address value stored in the pointer)
+void modify_actual_parameter__pointer(node** arg){
+
+    puts("modify_actual_parameter__pointer > begin."); 
+
+    // create a new struct node, get a pointer to it
+    node* n = (node*) malloc(sizeof(node));
+
+    // dereference formal parameter to modify actual parameter provided by calling function
+    (*arg) = n;
+}
+
+void increment_by_val(int arg){
+    // a local copy of arg is created. it has the same value, which is int.
+    // then this copy is incremented. actual parameter is not modified. 
+    // you can RETURN this copy and assign it to actual parameter manually. 
+    arg++;
+}
 
 // when necessary, it is possible to arrange for a function to modify a variable in a calling routine.
 // the caller must provide the address of the variable to be set (technically a pointer to the variable)
