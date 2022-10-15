@@ -1,10 +1,10 @@
 #include <stdio.h>
 
+// $ cc helloworld.cc
+// $ ./a.out
 int main(void)
 {
-    int testInteger = 0;
-    printf("Enter an integer: ");
-    scanf("%d", &testInteger);  
-    printf("\nNumber =  %d", testInteger);
+    printf("Hello, there!");
+    
     return 0;
 }

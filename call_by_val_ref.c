@@ -14,17 +14,22 @@ void modify_actual_parameter__pointer(node** arg);
 int sum(int a, int b, int result[]);
 
 /*
-By default, C uses call by value to pass arguments.
+    By default, C uses call by value to pass arguments.
 
-Values of actual parameters (parameters passed to function) are COPIED to function’s formal parameters and 
-stored in different memory locations. 
-So any changes made inside functions are not reflected in actual parameters of the caller.
+    Values of actual parameters (parameters passed to function) are COPIED 
+    to function’s formal parameters (local dummy variables) and stored in different memory locations. 
+    So any changes made inside functions are not reflected in actual parameters of the caller.
 
-But, when you pass the address of a variable, the local copy will have the same address as its value.
-Therefore, when dereferenced, it will change the actual parameter provided by calling function.
+    But, when you pass the address of a variable, the local copy will have the same address as its value.
+    Therefore, when dereferenced, it will change the actual parameter provided by calling function.
 
-the address of a variable : pointer : *
-the address of a pointer : pointer to pointer : **
+    the address of a variable is a pointer : *
+    the address of a pointer is a pointer to pointer : **
+
+    if you want to define a function to modify actual parameters (the variable of the calling function),
+    function definition should have the type as "the address" (pointer to it.) i.e. 
+    if calling function has int x, define the function to accept int* : f(int* arg), and call with the address f(&x)
+    if calling function has int* x, define the function to accept int** : f(int** arg), and call with the address f(&x)
 */
 int main(void){
 
