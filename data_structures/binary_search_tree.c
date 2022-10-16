@@ -11,13 +11,29 @@ typedef struct _node{
 node* new_node(int data);
 void process_node(node* tree);
 void traverse_inorder(node* tree);
-node * create_sample_bst();
+node * create_manual_bst();
+node* insert(node* nodePtr, int data);
 
 int main(void){
 
+    //node * tree = create_sample_bst();
+
     // create a pointer to tree structure
-    // node* tree = NULL;
-    node * tree = create_sample_bst();
+    node* tree = NULL;
+
+    tree = insert(tree, 7);
+    tree = insert(tree, 20);
+    tree = insert(tree, 15);
+    tree = insert(tree, 8);
+    tree = insert(tree, 40);
+    tree = insert(tree, 65);
+    tree = insert(tree, 2);
+    tree = insert(tree, 19);
+    tree = insert(tree, 90);
+    tree = insert(tree, 3);
+    tree = insert(tree, 5);
+    tree = insert(tree, 1);
+
 
     traverse_inorder(tree);
 
@@ -54,7 +70,7 @@ void traverse_inorder(node* tree){
     traverse_inorder(tree->right);
 }
 
-node * create_sample_bst(){
+node * create_manual_bst(){
 
     // create a pointer to tree structure
     node* root = NULL;
@@ -99,5 +115,23 @@ node * create_sample_bst(){
 
 
     return root;
+
+}
+// update a NULL node pointer to point at a new struct node.
+node* insert(node* nodePtr, int data){
+
+    if(nodePtr == NULL){
+        nodePtr = new_node(data);
+    }
+
+    // the pointer has an address value of a node
+    // calculate direction, call recursive on the subtree of that direction.
+    else if(data <= nodePtr->data){
+        nodePtr->left = insert(nodePtr->left, data);
+    }else if(data > nodePtr->data){
+        nodePtr->right = insert(nodePtr->right, data);
+    }
+
+    return nodePtr;
 
 }
