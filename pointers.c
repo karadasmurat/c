@@ -15,18 +15,22 @@ int main(void){
        In other words, when you see * in variable decleration, it is a pointer to the type specified left of it.
        i.e. char *p says p is a pointer to a variable of type char. (holds the address of a char variable)
 
-       int n = 10;
-       int* p = &n;
+       int n = 7;           // integer type
+       int* p = &n;         // pointer to integer type (holding the ADDRESS of an integer)
+       int** p_to_p = &p;   // pointer to pointer (holding the ADDRESS of an ADDRESS)
        
-       int   : integer type
-       int * : pointer to integer type (holding the ADDRESS of an integer)
 
+        name     _p_to_p_    __  p __    __ n  __    __ x  __
+                |        |  |        |  |        |  |        |
+        val     | 0x200  |  | 0x100  |  |   7    |  |   3    |
+                |_______ |  |________|  |________|  |________|
+        addr    0x300       0x200       0x100       0x50
 
-    name    | p2 |    | p  |    | n  |    |
-       --------------------------------------
-    val     |1280|    |1280|    | 10 |    |
-       --------------------------------------
-    addr    |1024|    |1052|    |1280|    |             
+    To update n through a pointer to it, use DEREFERENCE - 
+    *p = 17; // Go get the value at address Ox100, n is now 17.
+
+    To update p through a pointer to it, use DEREFERENCE - 
+    *p_to_p = &x; // Go get the value at address 0x200 (this is an address as well!), p is now 0x50.
 
     */
 
@@ -92,10 +96,10 @@ void copy_pointers(){
     int* p1 = &var;
     printf("p1: %p\n", p1); // 0x16d6d728c
     
-    int* p2 = p1;
-    printf("p2: %p\n", p2); // 0x16d6d728c
+    int* pcopy = p1;
+    printf("pcopy: %p\n", pcopy); // 0x16d6d728c
 
-    int* p3 = p2;
+    int* p3 = pcopy;
     printf("p3: %p\n", p3); // 0x16d6d728c
 
     // when you copy pointers, dereferencing any one of them alters the variable they point to!
