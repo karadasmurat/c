@@ -1,18 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-
-typedef struct _node{
-    int data;
-    struct _node *next;
-} node;
-
-/* Function prototypes*/
-void increment_by_val(int arg);
-void increment_byref(int* arg);
-void modify_actual_parameter__primitive(int* arg);
-void modify_actual_parameter__pointer(node** arg);
-int sum(int a, int b, int result[]);
-
 /*
     By default, C uses call by value to pass arguments.
 
@@ -27,10 +12,35 @@ int sum(int a, int b, int result[]);
     the address of a pointer is a pointer to pointer : **
 
     if you want to define a function to modify actual parameters (the variable of the calling function),
-    function definition should have the type as "the address" (pointer to it.) i.e. 
-    if calling function has int x, define the function to accept int* : f(int* arg), and call with the address f(&x)
-    if calling function has int* x, define the function to accept int** : f(int** arg), and call with the address f(&x)
+
+        Option 2:
+        function definition has the same type of actual parameter, and function RETURNS that value.
+        Calling function assigns the actual parameter to return value. ie:  f(int x), and call using x = f(x)
+
+        Option 1: 
+        function definition should have the type as "the address" (pointer to it.) i.e. 
+        if calling function has int x, define the function to accept int* : f(int* arg), and call with the address f(&x)
+        if calling function has int* x, define the function to accept int** : f(int** arg), and call with the address f(&x)
+
 */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct _node{
+    int data;
+    struct _node *next;
+} node;
+
+/* Function prototypes*/
+void increment_by_val(int arg);
+void increment_byref(int* arg);
+int return_incremented(int arg);
+void modify_actual_parameter__primitive(int* arg);
+void modify_actual_parameter__pointer(node** arg);
+int sum(int a, int b, int result[]);
+
+
 int main(void){
 
     int var = 0;
@@ -66,6 +76,12 @@ int main(void){
 
     //printf("main > b: %d, result: %d\n", b, result);    // b: 95, result: 90
     //printf("main > my_array[0]: %d\n", my_array[0]);    // my_array[0]: 90
+
+    int score = 99;
+    printf("main > score: %d\n", score); 
+    score = return_incremented(score);
+    printf("main > score: %d\n", score); 
+
 
     // allocate memory and get a pointer to it: list variable contains the beginning address.
     node* list = (node*) malloc(sizeof(node));
@@ -126,6 +142,14 @@ void modify_actual_parameter__pointer(node** arg){
 
     // dereference formal parameter to modify actual parameter provided by calling function
     (*arg) = n;
+}
+
+int return_incremented(int arg){
+    // a local copy of arg is created. it has the same value, which is int.
+    // then this copy is incremented, and RETURNED.
+
+    puts("return_incremented> begin."); 
+    return ++arg;
 }
 
 void increment_by_val(int arg){
