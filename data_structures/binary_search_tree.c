@@ -12,7 +12,7 @@ node* new_node(int data);
 void process_node(node* tree);
 void traverse_inorder(node* tree);
 node * create_manual_bst();
-node* insert(node* nodePtr, int data);
+void insert(node** nodePtr, int data);
 
 int main(void){
 
@@ -21,19 +21,18 @@ int main(void){
     // create a pointer to tree structure
     node* tree = NULL;
 
-    tree = insert(tree, 7);
-    tree = insert(tree, 20);
-    tree = insert(tree, 15);
-    tree = insert(tree, 8);
-    tree = insert(tree, 40);
-    tree = insert(tree, 65);
-    tree = insert(tree, 2);
-    tree = insert(tree, 19);
-    tree = insert(tree, 90);
-    tree = insert(tree, 3);
-    tree = insert(tree, 5);
-    tree = insert(tree, 1);
-
+    insert(&tree, 7);
+    insert(&tree, 20);
+    insert(&tree, 15);
+    insert(&tree, 8);
+    insert(&tree, 40);
+    insert(&tree, 65);
+    insert(&tree, 2);
+    insert(&tree, 19);
+    insert(&tree, 90);
+    insert(&tree, 3);
+    insert(&tree, 5);
+    insert(&tree, 1);
 
     traverse_inorder(tree);
 
@@ -118,20 +117,19 @@ node * create_manual_bst(){
 
 }
 // update a NULL node pointer to point at a new struct node.
-node* insert(node* nodePtr, int data){
+// *: pointer, **: address of a pointer, used to modify value of pointer.
+void insert(node** nodePtr, int data){
 
-    if(nodePtr == NULL){
-        nodePtr = new_node(data);
+    if(*nodePtr == NULL){
+        *nodePtr = new_node(data); // value is modifiable after dereferencing
     }
 
     // the pointer has an address value of a node
     // calculate direction, call recursive on the subtree of that direction.
-    else if(data <= nodePtr->data){
-        nodePtr->left = insert(nodePtr->left, data);
-    }else if(data > nodePtr->data){
-        nodePtr->right = insert(nodePtr->right, data);
+    else if(data <= (*nodePtr)->data){
+        insert(&((*nodePtr)->left), data); //address of left pointer
+    }else if(data > (*nodePtr)->data){
+        insert(&((*nodePtr)->right), data); //address of right pointer
     }
-
-    return nodePtr;
 
 }
