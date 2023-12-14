@@ -3,6 +3,8 @@
 #include <limits.h>
 #include <string.h>
 
+#define ARR_SIZE 3
+
 void enum_basics();
 void array_basics();
 void no_initialization_garbage();
@@ -39,11 +41,11 @@ int main(void){
     y = ++x;
     printf("x: %d, y: %d\n", x, y); // x: 11, y: 11
 
-    char_basics();
+    // char_basics();
 
     // enum_basics();
 
-    // array_basics();
+    array_basics();
 
     // no_initialization_garbage();
 
@@ -82,36 +84,64 @@ void array_basics(){
 
     // option 1
     // first declare the array with type, name and size, then initialize contents using index values
-    int grades[3];
-    
-    //the name of the array is a pointer containing the address of initial element
-    printf("The address of first element: %p\n", grades); // i.e. 0x16bb1324c
+    int students[10];
 
-    grades[0] = 90;
-    grades[1] = 80;
-    grades[2] = 95;
+    int grades[ARR_SIZE]; // use a symbolic constant ARR_SIZE whose value is 3.
+    
+    grades[0] = 9;
+    grades[1] = 7;
+    grades[2] = 8;
+
+    //the name of the array is a pointer containing the address of initial element
+    printf("grades      : %p\n", grades);       // 0x16f7871fc
+    printf("&grades[0]  : %p\n", &grades[0]);   // 0x16f7871fc
+
+    printf("\n%20s\n", "Histogram");
+    for(int i =0; i< ARR_SIZE; i++){
+        printf("grades[%d]  ", i);
+        for(int j =0; j< grades[i]; j++){
+            printf("%c", '*');
+        }
+        printf("\n");
+    }
 
 
     // option 2
-    // declare and initialize an array, size is inferred.
+    // declare and initialize an array using curly braces. (size is inferred)
     int val[] = {1, 2, 3, 5, 8};
+    char surname[] = "Black"; 
 
 
     // option 3 - dynamic memory allocation
     // allocate space and point the address of first element
-    int *years = malloc(3 * sizeof(int));
+    int *years = (int*) malloc(ARR_SIZE * sizeof(int));
     *years = 2019;          // *years  = value at the (go to) first address = years[0]
     *(years + 1) = 2020;    // pointer arithmetic to get the value at the next address = years[1] (offset is 1)
     years[2] = 2022;        // index, to get the specific element
 
-    printf("The address of first element: %p\n", years);
-    for (int i = 0; i < 3; i++)
+    printf("\nThe address of first element: %p\n", years);
+    printf("%9s%13s\n", "Element", "Value");
+    for (int i = 0; i < ARR_SIZE; i++)
     {
-        printf("years[%d]: %d\n", i, years[i]);
+        printf("years[%d]%13d\n", i, years[i]);
     }
 
     // free memory
     free(years);
+
+
+    // Instead of strings, C uses an array of single characters.
+    // initialize using string literals (double quoted list of characters)
+    char name[] = "Murat"; // this actually is {'M','u','r','a','t','\0'}; so 6 element array is used to store 5 charecter string.
+    puts("\nUse array name: ");
+    printf("name: %s\n", name);
+
+    puts("\nloop array of single characters");
+    int i = 0;
+    while (name[i] != '\0'){
+        printf("%c", name[i++]); //print i then increment (postfix)
+    }
+    
 
 }
 

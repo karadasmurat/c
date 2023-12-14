@@ -40,6 +40,7 @@ void push__byref(int data, node** stack){
     node* n = new_node(data);
 
     //dereference the argument (pointer) to modify the value it is pointing.
+    // send the address of the variable you want the function to modify
     n->next = *stack;
     *stack = n;
 

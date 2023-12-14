@@ -15,8 +15,8 @@ int main(void){
     puts("The original array: ");
     print_array(SIZE, scores);
 
-    bubblesort(SIZE, scores);
-    // selectionsort(SIZE, scores);
+    // bubblesort(SIZE, scores);
+    selectionsort(SIZE, scores);
 
     puts("Sorted array: ");
     print_array(SIZE, scores);
@@ -55,16 +55,22 @@ void bubblesort(int argc, int* args){
 void selectionsort(int argc, int* args){
 
     // For each pass, select the smallest
+    // Note that pass also represents the number of sorted elements
     for(int pass = 0; pass < argc; pass++){
 
-        int* min = &args[pass];
-        for(int i = pass; i< argc-1; i++){
+        // Note that we can keep track of index, or a pointer to the value at that index!
+        // int* min = &args[pass];
+        int minIndex = pass;
+        for(int j = pass; j< argc-1; j++){
 
-            if(args[i+1] < *min) 
-                min = &args[i+1];
+            // if(args[j+1] < *min) 
+            if(args[j+1] < args[minIndex]) 
+                // min = &args[i+1];
+                minIndex = j+1;
         }
 
-        swap(min, &args[pass]);
+        // swap(min, &args[pass]);
+        swap(&args[minIndex], &args[pass]);
 
         // result of this pass
         // print_array(SIZE, args);

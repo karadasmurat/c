@@ -71,8 +71,8 @@ int main(void){
     // in other words, the name refers to the address of the first element.
     printf("\nscores    : %p\n", scores); // 0x16f53b2a8
     printf("&scores[0]: %p\n", &scores[0]); // 0x16f53b2a8
-    printf("*scores: %d\n", *scores); // dereferencing
-    printf("scores[0] : %d\n", scores[0]);
+    printf("*scores: %d\n", *scores); // 95 dereferencing
+    printf("scores[0] : %d\n", scores[0]); // 95 dereferencing
 
 
     char *s = "Hello, world!";

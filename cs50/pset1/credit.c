@@ -2,7 +2,7 @@
 #include <math.h>
 #include <stdbool.h>
 
-int get_digits(long cardno);
+int number_of_digits(long cardno);
 void get_issuer(long cardno);
 int get_first_n_digits(long arg, int n);
 bool luhns(long cardno);
@@ -25,13 +25,13 @@ int main(void)
     return 0;
 }
 
-int get_digits(long cardno){
+int number_of_digits(long cardno){
     return 1 + floor(log10(cardno));
 }
 
 int get_first_n_digits(long arg, int n){
 
-    int digits = get_digits(arg);
+    int digits = number_of_digits(arg);
     return (int) (arg / pow(10, digits-n));
 }
 
@@ -48,7 +48,7 @@ void get_issuer(long cardno){
         return ;
     }
 
-    int digits = get_digits(cardno);
+    int digits = number_of_digits(cardno);
     int first_digit = get_first_n_digits(cardno, 1);
     int first_two_digits = get_first_n_digits(cardno, 2);
         
@@ -74,6 +74,7 @@ bool luhns(long cardno){
 
     short weight = 1; // toggle switch for double(1) and normal(-1) digits
     int sum = 0;
+
     while(1){
         cardno /= 10;
         if(cardno < 1) break;
