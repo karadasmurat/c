@@ -8,6 +8,14 @@ typedef struct _car{
     char model[50];
 } car;
 
+// Define a struct named "Person"
+struct Person
+{
+    char name[50];
+    int age;
+    float height;
+};
+
 void print_car(car c);
 
 

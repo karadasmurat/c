@@ -1,34 +1,61 @@
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <limits.h>
 #include <string.h>
 
 #define ARR_SIZE 3
 
+void numberBasics();
 void enum_basics();
 void array_basics();
 void no_initialization_garbage();
 void char_basics();
-void print_reverse(char * s);
+void print_reverse(char *s);
 
-int main(void){
+int main(void)
+{
+    numberBasics();
+    // char_basics();
+    // enum_basics();
+    // array_basics();
+    // no_initialization_garbage();
 
-    // limits defined in limits.h
-    printf("INT_MAX: %d\n", INT_MAX);
-    //unsigned int data type
-    printf("unsigned int\nStorage size: %zu bytes \t Maximum value: %u\n\n", sizeof(unsigned int), UINT_MAX);
+    return 0;
+}
+
+void numberBasics()
+{
+    // declare a variable, assignin a type and an identifier (name)
+    int n1;
+
+    // declare and initialize a variable
+    int n2 = 1;
+
+    // We can declare multiple variables in any single declaration, but doing so can get confusing
+    // Declarations can be easier to understand if each is on its own line
+    int a, b, c;
+
+    unsigned int ui; // unsigned is required, int can be omitted
+
+    // the value of an integer can be specified in decimal, octal or hexadecimal
+    // leading zero means octal, leading 0x hexadecimal.
+    int decimal_val = 31; // Digits are ... 10^2, 10^1, 10^0
+    int octal_val = 037;  // Digits are ... 8^2, 8^1, 8^0
+    int hex_val = 0X1F;   // Digits are ... 16^2, 16^1, 16^0
+
+    printf("Decimal: %d, Octal: %d, Hex: %d\n", decimal_val, octal_val, hex_val);
 
     /* Long decimal constants */
     long long_val = 10L;
 
-    // the value of an integer can be specified in octal or hexadecimal instead of decimal
-    // leading zero means octal, leading 0x hexadecimal.
-    int decimal_val = 31;
-    int octal_val = 037;
-    int hex_val = 0X1F;
+    double fp1 = 10.0;       /* type double */
+    float fp2 = 10.0F;       /* type float */
+    long double fp3 = 10.0L; /* type long double */
 
-    printf("Decimal: %d, Octal: %d, Hex: %d\n", decimal_val, octal_val, hex_val);
-
+    // limits defined in limits.h
+    printf("INT_MAX: %d\n", INT_MAX);
+    // unsigned int data type
+    printf("unsigned int\nStorage size: %zu bytes \t Maximum value: %u\n\n", sizeof(unsigned int), UINT_MAX);
 
     // increment
     // postfix increments the variable AFTER its value is used.
@@ -41,22 +68,48 @@ int main(void){
     y = ++x;
     printf("x: %d, y: %d\n", x, y); // x: 11, y: 11
 
-    // char_basics();
+    // Increment and Decrement Operators
+    int cnt = 0;
+    int res;                            // result of the expression
+    res = cnt++;                        // postfix increment: res = cnt; cnt = cnt +1
+    printf("res:%d, cnt:%d", res, cnt); // res:0, cnt:1
 
-    // enum_basics();
+    res = cnt--;                        // postfix decrement: res = cnt; cnt = cnt -1
+    printf("res:%d, cnt:%d", res, cnt); // res:1, cnt:0
 
-    array_basics();
+    res = ++cnt;                        // prefix increment
+    printf("res:%d, cnt:%d", res, cnt); // res:1, cnt:1
 
-    // no_initialization_garbage();
-
-    return 0;
+    res = --cnt;                        // prefix decrement:
+    printf("res:%d, cnt:%d", res, cnt); // res:0, cnt:0
 }
 
-void enum_basics(){
+void enum_basics()
+{
     // enumerations provide a convenient way to associate constant values with names.
     // the first name in an enum has value 0, the next 1, and so on, unless explicit values are specified.
-    enum direction {North, South, East, West};
-    enum month{JAN=1, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC}; //FEB is 2, MAR is 3, etc.
+    enum direction
+    {
+        North,
+        South,
+        East,
+        West
+    };
+    enum month
+    {
+        JAN = 1,
+        FEB,
+        MAR,
+        APR,
+        MAY,
+        JUN,
+        JUL,
+        AUG,
+        SEP,
+        OCT,
+        NOV,
+        DEC
+    }; // FEB is 2, MAR is 3, etc.
 
     // declare a variable of type enum choice
     enum direction nav;
@@ -69,16 +122,20 @@ void enum_basics(){
     printf("enum direction: %d\n", nav);
     printf("enum month: %d\n", m);
 }
-void no_initialization_garbage(){
-    
+
+void no_initialization_garbage()
+{
+
     int val[5];
 
-    for(int i = 0; i < 5; i++){
+    for (int i = 0; i < 5; i++)
+    {
         printf("val[%d]: %d\n", i, val[i]);
     }
 }
 
-void array_basics(){
+void array_basics()
+{
 
     puts("\n--- array basics ---");
 
@@ -87,37 +144,38 @@ void array_basics(){
     int students[10];
 
     int grades[ARR_SIZE]; // use a symbolic constant ARR_SIZE whose value is 3.
-    
+
     grades[0] = 9;
     grades[1] = 7;
     grades[2] = 8;
 
-    //the name of the array is a pointer containing the address of initial element
-    printf("grades      : %p\n", grades);       // 0x16f7871fc
-    printf("&grades[0]  : %p\n", &grades[0]);   // 0x16f7871fc
+    // the name of the array is a pointer containing the address of initial element
+    printf("grades      : %p\n", grades);     // 0x16f7871fc
+    printf("&grades[0]  : %p\n", &grades[0]); // 0x16f7871fc
 
     printf("\n%20s\n", "Histogram");
-    for(int i =0; i< ARR_SIZE; i++){
+    for (int i = 0; i < ARR_SIZE; i++)
+    {
         printf("grades[%d]  ", i);
-        for(int j =0; j< grades[i]; j++){
+        for (int j = 0; j < grades[i]; j++)
+        {
             printf("%c", '*');
         }
         printf("\n");
     }
 
-
     // option 2
     // declare and initialize an array using curly braces. (size is inferred)
     int val[] = {1, 2, 3, 5, 8};
-    char surname[] = "Black"; 
-
+    char surname[] = "Black";
 
     // option 3 - dynamic memory allocation
     // allocate space and point the address of first element
-    int *years = (int*) malloc(ARR_SIZE * sizeof(int));
-    *years = 2019;          // *years  = value at the (go to) first address = years[0]
-    *(years + 1) = 2020;    // pointer arithmetic to get the value at the next address = years[1] (offset is 1)
-    years[2] = 2022;        // index, to get the specific element
+    // note that the name of an array is a pointer to first element
+    int *years = (int *)malloc(ARR_SIZE * sizeof(int));
+    *years = 2019;       // *years  = value at the (go to) first address = years[0]
+    *(years + 1) = 2020; // pointer arithmetic to get the value at the next address = years[1] (offset is 1)
+    years[2] = 2022;     // index, to get the specific element
 
     printf("\nThe address of first element: %p\n", years);
     printf("%9s%13s\n", "Element", "Value");
@@ -129,23 +187,23 @@ void array_basics(){
     // free memory
     free(years);
 
-
     // Instead of strings, C uses an array of single characters.
     // initialize using string literals (double quoted list of characters)
-    char name[] = "Murat"; // this actually is {'M','u','r','a','t','\0'}; so 6 element array is used to store 5 charecter string.
+    char name[] =
+        "Murat"; // this actually is {'M','u','r','a','t','\0'}; so 6 element array is used to store 5 charecter string.
     puts("\nUse array name: ");
     printf("name: %s\n", name);
 
     puts("\nloop array of single characters");
     int i = 0;
-    while (name[i] != '\0'){
-        printf("%c", name[i++]); //print i then increment (postfix)
+    while (name[i] != '\0')
+    {
+        printf("%c", name[i++]); // print i then increment (postfix)
     }
-    
-
 }
 
-void char_basics(){
+void char_basics()
+{
 
     puts("\n--- char basics ---");
 
@@ -160,14 +218,16 @@ void char_basics(){
 
     // initialize using double quotes
     // Option 1: square braces []
-    char name[] = "Murat"; // this actually is {'M','u','r','a','t','\0'}; so 6 element array is used to store 5 charecter string.
-    
+    char name[] =
+        "Murat"; // this actually is {'M','u','r','a','t','\0'}; so 6 element array is used to store 5 charecter string.
+
     printf("name: %s\n", name);
 
     // Option 2: USING A POINTER *
     // string literals are designed to be constant, stored in read-only memory
-    // const modifier means that your compiler will complain if you try to modify an array with that particular variable.
-    const char *surname = "Karadas"; 
+    // const modifier means that your compiler will complain if you try to modify an array with that particular
+    // variable.
+    const char *surname = "Karadas";
 
     // if you want to modify a string, you need to make a copy in a new array.
     // surname[0] = 'Q'; // BUS ERROR
@@ -175,12 +235,11 @@ void char_basics(){
     // the variable "surname" points to the beginning of string
     // in other words, it contains the ADDRESS of the FIRST character
     printf("Address of the first character - surname: %p\n", surname); // ie. 0x10431ff28
-    printf("the first character - *surname  : %c\n", *surname); // K
-    printf("the first character - surname[0]: %c\n", *surname); // K
-    
+    printf("the first character - *surname  : %c\n", *surname);        // K
+    printf("the first character - surname[0]: %c\n", *surname);        // K
+
     // the char array (string)
     printf("Surname, Name: %s, %s\n", surname, name);
-
 
     // string.h functions
     printf("Length of surname: %lu\n", strlen(surname));
@@ -188,8 +247,8 @@ void char_basics(){
     // dynamic memory allocation
     // allocate space and point the address of first element
     char *degree = malloc(3 * sizeof(char));
-    *degree = 'B';          // *degree = value at the (go to) first address = degree[0] (offset is zero)
-    *(degree + 1) = 'S';    // *(degree+1) = value of (go to) next address = degree[1] (offset is one)
+    *degree = 'B';       // *degree = value at the (go to) first address = degree[0] (offset is zero)
+    *(degree + 1) = 'S'; // *(degree+1) = value of (go to) next address = degree[1] (offset is one)
     degree[2] = 'c';
 
     printf("Degree: %s\n", degree);
@@ -198,24 +257,23 @@ void char_basics(){
 
     // if string is an array of char: []
     // array of string is an array of array of char: [][]
-    
 }
 
-void print_reverse(char *str){
+void print_reverse(char *str)
+{
 
     int len = 0;
     len = strlen(str);
-    
+
     // while(str[len] != '\0')
     //     len++;
-    
+
     char *tail = str + len - 1;
 
-    while(tail >= str){
+    while (tail >= str)
+    {
         printf("%c", *tail);
         tail--;
-        //len--;
+        // len--;
     }
-
 }
-
