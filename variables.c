@@ -1,23 +1,66 @@
 #include <limits.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #define ARR_SIZE 3
 
+// enumerations provide a convenient way to associate constant values with names.
+// the first name in an enum has value 0, the next 1, and so on, unless explicit values are specified.
+enum DIRECTION
+{
+    North, // 0
+    South, // 1
+    East,  // 2
+    West   // 3
+};
+
+enum MONTH
+{
+    JAN = 1,
+    FEB,
+    MAR,
+    APR,
+    MAY,
+    JUN,
+    JUL,
+    AUG,
+    SEP,
+    OCT,
+    NOV,
+    DEC
+}; // FEB is 2, MAR is 3, etc.
+
+typedef enum _AccountType
+{
+    Savings,
+    Checking,
+    MoneyMarket
+} AccountType;
+
 void numberBasics();
+void booleanBasics();
+void stringBasics();
+void castingBasics();
 void enum_basics();
 void array_basics();
 void no_initialization_garbage();
 void char_basics();
 void print_reverse(char *s);
+enum DIRECTION redirectSouthToNorth(enum DIRECTION dir);
+void acceptEnumType(AccountType accType);
+void printInteger(int n);
 
 int main(void)
 {
-    numberBasics();
+    // numberBasics();
+    // booleanBasics();
+    // stringBasics();
+    // castingBasics();
     // char_basics();
     // enum_basics();
-    // array_basics();
+    array_basics();
     // no_initialization_garbage();
 
     return 0;
@@ -25,6 +68,10 @@ int main(void)
 
 void numberBasics()
 {
+    // puts automatically appends a newline character ('\n') at the end of the string.
+    puts("Number Basics");
+    puts("--------------");
+
     // declare a variable, assignin a type and an identifier (name)
     int n1;
 
@@ -84,43 +131,117 @@ void numberBasics()
     printf("res:%d, cnt:%d", res, cnt); // res:0, cnt:0
 }
 
+void booleanBasics()
+{
+    // C does not have a built-in boolean data type
+    // The <stdbool.h> header, introduced in the C99 standard, provides a boolean type and associated macros to improve
+    // code readability. The bool type is defined as an alias for _Bool, and the macros true and false are defined.
+
+    // puts automatically appends a newline character ('\n') at the end of the string.
+    puts("Boolean Basics");
+    puts("--------------");
+
+    bool condition = true;
+
+    if (condition)
+    {
+
+        puts("condition is true!\n");
+    }
+    else
+    {
+        puts("condition is false!");
+    }
+}
+
+void stringBasics()
+{
+    // The name array has been declared with a size of 100 characters, and
+    // it has been initialized with the string "MK"
+    char name[100] = "MK";
+
+    // Calculate the length of the string
+    size_t length = strlen(name);
+
+    // Print the length and size
+    printf("string: %s\n", name);
+    printf("Length of the string: %zu\n", length);
+    printf("Size of the array: %zu\n", sizeof(name));
+}
+
+void castingBasics()
+{
+    int a = 5;
+    float b = 2.5;
+
+    float result = a + b;     // Implicit conversion of 'a' to float before addition
+    printf("%.2f\n", result); // 7.50
+
+    double pi = 3.14159;
+    int roundedPi = (int)pi; // Explicitly cast double to int
+
+    // a pointer to a string literal
+    const char *numberString = "12345";
+
+    // an array, and it provides a modifiable buffer to hold the string.
+    const char text[] = "123.45";
+
+    // Convert ASCII string to integer
+    int intValue = atoi(numberString);
+
+    // Convert ASCII string to float
+    float fVal = atof(numberString);
+
+    printf("%d %.2f\n", intValue, fVal); // 12345 12345.00
+}
+
 void enum_basics()
 {
-    // enumerations provide a convenient way to associate constant values with names.
-    // the first name in an enum has value 0, the next 1, and so on, unless explicit values are specified.
-    enum direction
-    {
-        North,
-        South,
-        East,
-        West
-    };
-    enum month
-    {
-        JAN = 1,
-        FEB,
-        MAR,
-        APR,
-        MAY,
-        JUN,
-        JUL,
-        AUG,
-        SEP,
-        OCT,
-        NOV,
-        DEC
-    }; // FEB is 2, MAR is 3, etc.
 
-    // declare a variable of type enum choice
-    enum direction nav;
-    enum month m;
+    // declare a variable of type enum DIRECTION
+    enum DIRECTION nav;
+    enum MONTH m;
 
     // assignment
-    nav = West;
+    nav = South;
     m = SEP;
 
     printf("enum direction: %d\n", nav);
     printf("enum month: %d\n", m);
+
+    printf("%d", redirectSouthToNorth(nav));
+
+    // An enumeration constant can be used anywhere the C language permits an integer expression.
+    printInteger(333);
+    printInteger(East);
+
+    acceptEnumType(Checking);
+    acceptEnumType(0);
+}
+
+// Function that accepts a parameter and returns type enum
+enum DIRECTION redirectSouthToNorth(enum DIRECTION dir)
+{
+    return dir == South ? North : dir;
+}
+
+void acceptEnumType(AccountType accType)
+{
+    switch (accType)
+    {
+    case Savings:
+        puts("Savings account.");
+        break;
+
+    default:
+        puts("Not a savings account");
+        break;
+    }
+}
+
+void printInteger(int n)
+{
+    printf("printInteger: %d", n);
 }
 
 void no_initialization_garbage()
@@ -134,14 +255,64 @@ void no_initialization_garbage()
     }
 }
 
+void multidimensionalArrayBasics()
+{
+    puts("MultiDimensional Array Basics");
+    puts("-----------------------------");
+
+    // Declaration of a 2x3 char array
+    char A[2][3];
+
+    // Assigning values to the elements of the array
+    A[0][0] = 'A';
+    A[0][1] = 'B';
+    A[0][2] = 'C';
+    A[1][0] = 'D';
+    A[1][1] = 'E';
+    A[1][2] = 'F';
+
+    // Declaration of a 2D array, with arrays as members:
+    int scores[][3] = {{70, 77, 75}, {90, 99, 95}};
+
+    // Loop 2-D Array to access the elements:
+    // 70 77 75
+    // 90 100 95
+    for (int r = 0; r < 2; ++r)
+    {
+        for (int c = 0; c < 3; ++c)
+        {
+            printf("%d ", scores[r][c]);
+        }
+        printf("\n");
+    }
+}
+
+void stringArrays()
+{
+    // We know that C  implements strings as arrays of characters.
+    // Therefore, we can represent an array of strings as an array of arrays
+    // using a two-dimensional character array
+    // The size[20] indicates the maximum length of each string(including the null terminator).
+    char fruits[4][20] = {"Apple", "Banana", "Orange", "Grapes"};
+
+    // Access and print individual strings
+    for (int i = 0; i < 4; ++i)
+    {
+        printf("%s ", fruits[i]);
+    }
+}
+
 void array_basics()
 {
-
-    puts("\n--- array basics ---");
+    puts("Array Basics");
+    puts("------------");
 
     // option 1
     // first declare the array with type, name and size, then initialize contents using index values
-    int students[10];
+    int students[100];
+    char house[100]; // name of house, string, as an array of characters
+
+    printf("%zu %zu", sizeof(students), sizeof(house)); // 400, 100
 
     int grades[ARR_SIZE]; // use a symbolic constant ARR_SIZE whose value is 3.
 
@@ -200,6 +371,9 @@ void array_basics()
     {
         printf("%c", name[i++]); // print i then increment (postfix)
     }
+
+    multidimensionalArrayBasics();
+    stringArrays();
 }
 
 void char_basics()

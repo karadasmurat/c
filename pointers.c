@@ -3,6 +3,10 @@
 /* Function prototypes*/
 void copy_pointers();
 void swap(int *a, int *b);
+int increment_val(int n);
+void increment_ref(int *n);
+void printArray_ptr(int *arr, int size);
+void printArray_arr(int arr[], int size);
 
 int main(void)
 {
@@ -84,6 +88,23 @@ int main(void)
     printf("s    : %p\n", s);     // 0x... (pointer, address)
     printf("&s[0]: %p\n", &s[0]); // the address of the first element
 
+    int cnt = 0;
+
+    // Pass a copy of the value of 'cnt' to the function
+    // The function returns the modified copy - assign the return value back to the original argument
+    cnt = increment_val(cnt);
+    printf("%d\n", cnt); // 1
+
+    // Pass the address of 'cnt' to the function
+    // No return, original argument is modified directly
+    increment_ref(&cnt); // 2
+
+    printf("%d\n", cnt);
+
+    int numbers[] = {2, 4, 6, 8, 10};
+    printArray_ptr(numbers, 5); // [ 2 4 6 8 10 ]
+    printArray_arr(numbers, 5); // [ 2 4 6 8 10 ]
+
     return 0;
 }
 
@@ -112,6 +133,28 @@ void copy_pointers()
 }
 
 /*
+This function will make a local copy of the argument passed to this function,
+increment the copy by one, and then return it.
+*/
+int increment_val(int n)
+{
+
+    return ++n;
+}
+
+/*
+This function accepts a pointer to an integer (address of an integer), and
+increments the value at the memory location pointed to by that pointer.
+
+Changes made to the variable inside the function will persist outside the function
+because the function works directly with the memory location of the original variable.
+*/
+void increment_ref(int *n)
+{
+    (*n)++;
+}
+
+/*
  * parameters are declared as pointers
  * the operands are accessed indirectly through them
  * (caller pass the addresses of its variables, and called can modify them directly through these addresses)
@@ -122,4 +165,25 @@ void swap(int *a, int *b)
     int temp = *a;
     *a = *b;
     *b = temp;
+}
+
+// Function that accepts an array of integers
+void printArray_ptr(int *arr, int size)
+{
+    printf("[ ");
+    for (int i = 0; i < size; ++i)
+    {
+        printf("%d ", arr[i]);
+    }
+    printf("]\n");
+}
+
+void printArray_arr(int arr[], int size)
+{
+    printf("[ ");
+    for (int i = 0; i < size; ++i)
+    {
+        printf("%d ", arr[i]);
+    }
+    printf("]\n");
 }
