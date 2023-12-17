@@ -56,11 +56,12 @@ int main(void)
 {
     // numberBasics();
     // booleanBasics();
-    // stringBasics();
+    // array_basics();
+    stringBasics();
     // castingBasics();
     // char_basics();
     // enum_basics();
-    array_basics();
+
     // no_initialization_garbage();
 
     return 0;
@@ -156,6 +157,9 @@ void booleanBasics()
 
 void stringBasics()
 {
+    puts("String Basics");
+    puts("--------------");
+
     // The name array has been declared with a size of 100 characters, and
     // it has been initialized with the string "MK"
     char name[100] = "MK";
@@ -167,6 +171,17 @@ void stringBasics()
     printf("string: %s\n", name);
     printf("Length of the string: %zu\n", length);
     printf("Size of the array: %zu\n", sizeof(name));
+
+    // COPY
+    char firstname[] = "MSL";
+
+    printf("%p: %s %c\n", firstname, firstname, *firstname); // 0x16b23ee84: MSL M
+
+    // firstname = "ABC"; // Error: You can't assign a new value to the array
+
+    strcpy(firstname, "BRC"); // Copy "BRC" into the array
+
+    printf("%p: %s %c\n", firstname, firstname, *firstname); // 0x16b23ee84: BRC B
 }
 
 void castingBasics()
@@ -447,7 +462,8 @@ void char_basics()
     // string literals are designed to be constant, stored in read-only memory
     // const modifier means that your compiler will complain if you try to modify an array with that particular
     // variable.
-    const char *surname = "Karadas";
+    // const char *surname = "Karadas";
+    char *surname = "Karadas";
 
     // if you want to modify a string, you need to make a copy in a new array.
     // surname[0] = 'Q'; // BUS ERROR
