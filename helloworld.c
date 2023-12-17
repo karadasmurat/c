@@ -20,6 +20,9 @@ int main(void)
 
 void tmp(int score)
 {
-    
+    int num1 = 10, num2 = 20, num3 = 30, num4 = 40;
+
+    // Declare an array of pointers to integers
+    int *nums[] = {&num1, &num2, &num3, &num4};
 }
 
