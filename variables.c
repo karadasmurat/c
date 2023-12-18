@@ -56,8 +56,8 @@ int main(void)
 {
     // numberBasics();
     // booleanBasics();
-    // array_basics();
-    stringBasics();
+    array_basics();
+    // stringBasics();
     // castingBasics();
     // char_basics();
     // enum_basics();
@@ -270,47 +270,6 @@ void no_initialization_garbage()
     }
 }
 
-void arrayOfPointers()
-{
-
-    puts("Array of Pointers");
-    puts("-----------------");
-
-    int std1_math = 50;
-    int std1_eng = 51;
-    int std1_sci = 52;
-
-    // v1. declare an array of pointers
-    // note that pointer can be pointing to a primitive, or an array (the first element of an array)
-    int *scores_std1[] = {&std1_math, &std1_eng, &std1_sci};
-
-    printf("%s ", "[");
-
-    for (int i = 0; i < 3; i++)
-    {
-        printf("%d ", *scores_std1[i]);
-    }
-    puts("]");
-
-    // declare and initialize math, eng and sci as an array of integers.
-    int math[] = {80, 90, 70, 60, 50};
-    int eng[] = {81, 91, 71, 61, 51};
-    int sci[] = {82, 92, 72, 62, 52};
-
-    // v2. declare an array of pointers
-    // the name of an array holds an address value. so it is a pointer indeed.
-    // the address it holds is the address of the first element of the array
-    int *scores_all[] = {math, eng, sci};
-
-    for (int r = 0; r < 3; ++r)
-    {
-        for (int c = 0; c < 5; ++c)
-        {
-            printf("%d ", scores_all[r][c]);
-        }
-        printf("\n");
-    }
-}
 void multidimensionalArrayBasics()
 {
     puts("MultiDimensional Array Basics");
@@ -341,8 +300,6 @@ void multidimensionalArrayBasics()
         }
         printf("\n");
     }
-
-    arrayOfPointers();
 }
 
 void stringArrays()
@@ -399,7 +356,7 @@ void array_basics()
     char surname[] = "Black";
 
     // option 2.1
-    int *favs = {3, 5, 8};
+    // int *favs = {3, 5, 8}; // incompatible integer to pointer conversion
 
     // option 3 - dynamic memory allocation
     // allocate space and point the address of first element

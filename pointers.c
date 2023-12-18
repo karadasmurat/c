@@ -1,12 +1,21 @@
+#include "mk_utils.h"
 #include <stdio.h>
 
+struct Student
+{
+    char name[50];
+    int age;
+};
+
 /* Function prototypes*/
+void pointer_sizes();
 void copy_pointers();
 void swap(int *a, int *b);
 int increment_val(int n);
 void increment_ref(int *n);
 void printArray_ptr(int *arr, int size);
 void printArray_arr(int arr[], int size);
+void arrayOfPointers();
 
 int main(void)
 {
@@ -105,9 +114,62 @@ int main(void)
     printArray_ptr(numbers, 5); // [ 2 4 6 8 10 ]
     printArray_arr(numbers, 5); // [ 2 4 6 8 10 ]
 
+    pointer_sizes();
+    arrayOfPointers();
     return 0;
 }
 
+void pointer_sizes()
+{
+    puts("Pointer Sizes");
+    puts("-------------");
+
+    int *iptr;
+    char *cptr;
+    struct Student *sptr;
+
+    printf("int: %zu\n", sizeof(*iptr));            // 4 bytes
+    printf("int *: %zu\n", sizeof(iptr));           // 8 bytes
+    printf("char: %zu\n", sizeof(*cptr));           // 1 byte
+    printf("char *: %zu\n", sizeof(cptr));          // 8 bytes
+    printf("struct Person: %zu\n", sizeof(*sptr));  // 56 bytes (2 bytes padding)
+    printf("struct Person *: %zu\n", sizeof(sptr)); // 8 bytes
+}
+
+void arrayOfPointers()
+{
+    puts("Array of Pointers");
+    puts("-----------------");
+
+    int std1_math = 50;
+    int std1_eng = 51;
+    int std1_sci = 52;
+
+    // v1. declare an array of pointers
+    // note that pointer can be pointing to a primitive, or an array (the first element of an array)
+    int *scores_std1[] = {&std1_math, &std1_eng, &std1_sci};
+
+    print_array(*scores_std1, 3);
+
+    // declare and initialize math, eng and sci as an array of integers.
+    // note that these arrays have different lengths.
+    int math[] = {80, 90, 70};
+    int eng[] = {81, 91, 71, 61, 51};
+    int sci[] = {82, 92, 72, 62};
+
+    // v2. declare an array of pointers: each array element is a pointer
+    // note. the name of an array (ie, math) is a pointer - holds the address of first element.
+    int *scores_all[] = {math, eng, sci};
+
+    print_array(scores_all[0], 3); // [ 80 90 70 ]
+    print_array(scores_all[1], 5); // [ 81 91 71 61 51 ]
+    print_array(scores_all[2], 4); // [ 82 92 72 62 ]
+
+    // double pointer??
+    printf("%p\n", scores_all);   // pointer to array of pointers
+    printf("%p\n", *scores_all);  // pointer to array of ints
+    printf("%d\n", **scores_all); // 80
+}
 // when you copy a pointer, you copy its value, which is an address value - the address it refers to.
 // dereferencing any one of them alters the variable they point to!
 void copy_pointers()
