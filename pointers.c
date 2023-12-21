@@ -97,6 +97,10 @@ int main(void)
     printf("s    : %p\n", s);     // 0x... (pointer, address)
     printf("&s[0]: %p\n", &s[0]); // the address of the first element
 
+    puts("Assigning an integer value to a pointer?");
+    int *numptr = 1;
+    printf("%p: %d\n", numptr, *numptr);
+
     int cnt = 0;
 
     // Pass a copy of the value of 'cnt' to the function
