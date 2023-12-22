@@ -9,3 +9,9 @@ void print_array(int *arr, size_t size)
     }
     puts("]\n");
 }
+
+// Example code to test
+int add(int a, int b)
+{
+    return a + b;
+}
