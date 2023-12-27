@@ -40,6 +40,7 @@ typedef enum _AccountType
 } AccountType;
 
 void numberBasics();
+void operatorBasics();
 void booleanBasics();
 void stringBasics();
 void castingBasics();
@@ -55,8 +56,9 @@ void printInteger(int n);
 int main(void)
 {
     // numberBasics();
+    operatorBasics();
     // booleanBasics();
-    array_basics();
+    // array_basics();
     // stringBasics();
     // castingBasics();
     // char_basics();
@@ -130,6 +132,14 @@ void numberBasics()
 
     res = --cnt;                        // prefix decrement:
     printf("res:%d, cnt:%d", res, cnt); // res:0, cnt:0
+}
+
+void operatorBasics()
+{
+    int a = 8;
+    int b = 3;
+
+    printf("%d / %d = %d\n", a, b, a / b);
 }
 
 void booleanBasics()
