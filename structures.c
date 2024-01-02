@@ -38,9 +38,25 @@ typedef struct _car
     char model[50];
 } car;
 
+struct House
+{
+    char name[30];
+    int foundingYear;
+};
+
+// Define the Wizard structure containing a pointer to House structure
+struct Wizard
+{
+    char name[50];
+    struct House *house;
+};
+
 // Function Prototypes
 void print_car(car c);
 void pointersToStructures();
+void structConstructors();
+void structsWithStructPointers();
+void wizardInfo(struct Wizard *wizard);
 void printRectangle(struct Rectangle *ptr);
 void allocateMemoryForStructures();
 void structs_and_arrays();
@@ -78,10 +94,11 @@ int main(void)
     car my_car = {2019, "Volkswagen", "T-ROC"};
     print_car(my_car);
 
-    pointersToStructures();
-    allocateMemoryForStructures();
-
-    structs_and_arrays();
+    // pointersToStructures();
+    structConstructors();
+    // structsWithStructPointers();
+    // allocateMemoryForStructures();
+    // structs_and_arrays();
 
     return 0;
 }
@@ -119,6 +136,90 @@ void structs_and_arrays()
 
     // Freeing the allocated memory using free when done.
     free(ptr);
+}
+
+// v1 Constructor Function -
+// return a struct
+struct House newHouse(const char *name, int year)
+{
+
+    // Creates a local variable house
+    struct House house;
+    strcpy(house.name, name);
+    house.foundingYear = year;
+
+    printf("newHouse: New struct House at %p\n", &house);
+
+    // Note that returning a local variable from a function is NOT RECOMMENDED.
+    // Using it outside the function can lead to undefined behavior,
+    // especially if the local variable's address is accessed after the function has returned.
+    return house;
+}
+
+// v2 Constructor Function -
+// Allocate memory for a new House, and set fields, and return a pointer to it.
+struct House *createHouse(const char *name, int year)
+{
+    struct House *house = (struct House *)malloc(sizeof(struct House));
+    if (house != NULL)
+    {
+        strcpy(house->name, name);
+        house->foundingYear = year;
+    }
+
+    // who will deallocate?
+    return house;
+}
+
+void structConstructors()
+{
+    // v1
+    struct House slytherin = newHouse("Slytherin", 990);
+
+    printf("Received new House. Address: %p\n", &slytherin);
+    printf("%s, %d\n", slytherin.name, slytherin.foundingYear); // Slytherin, 990
+
+    // v2 Custom constructor function
+    struct House *hufflepuff = createHouse("Hufflepuff", 990);
+
+    printf("%p\n", hufflepuff);                                                // 0x11ce06a60
+    printf("%p, %s\n", hufflepuff->name, hufflepuff->name);                    // 0x11ce06a60, Hufflepuff
+    printf("%p: %d\n", &(hufflepuff->foundingYear), hufflepuff->foundingYear); // 0x11ce06a80: 990
+
+    // Free memory allocated by the constructor function
+    free(hufflepuff);
+}
+void structsWithStructPointers()
+{
+    // Create an instance of the House structure
+    struct House gryffindor = {"Gryffindor", 990};
+
+    // Create an instance of the Wizard structure with a pointer to the House structure
+    struct Wizard potter = {"Harry Potter", &gryffindor};
+
+    // Access and print information
+    printf("%s, belongs to %s House.\n", potter.name, potter.house->name);
+
+    // Custom constructor function
+    struct House *slytherin = createHouse("Slytherin", 990);
+
+    struct Wizard *wiz = (struct Wizard *)malloc(sizeof(struct Wizard));
+
+    strcpy(wiz->name, "Draco Malfoy");
+    wiz->house = slytherin;
+
+    wizardInfo(wiz);
+
+    free(slytherin);
+    free(wiz);
+}
+
+void wizardInfo(struct Wizard *wizard)
+{
+    // Access and print information
+    puts("Wizard Information:");
+    puts("-------------------");
+    printf("%s, belongs to %s House.\n", wizard->name, wizard->house->name);
 }
 
 void pointersToStructures()
