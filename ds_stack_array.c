@@ -1,11 +1,15 @@
+/*
+TODO - work on this preliminary implementation
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX_SIZE 100
+#define CAPACITY 100
 
 struct Stack
 {
-    int arr[MAX_SIZE];
+    int arr[CAPACITY];
     int top;
 };
 
@@ -24,7 +28,7 @@ int isEmpty(struct Stack *stack)
 // Function to check if the stack is full
 int isFull(struct Stack *stack)
 {
-    return stack->top == MAX_SIZE - 1;
+    return stack->top == CAPACITY - 1;
 }
 
 // Function to push an element onto the stack

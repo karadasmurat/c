@@ -3,11 +3,13 @@
 
 void declaration();
 void resizeDemo();
+void reallocDemo();
 
 int main()
 {
-    declaration();
+    // declaration();
     // resizeDemo();
+    reallocDemo();
     return EXIT_SUCCESS;
 }
 
@@ -35,6 +37,24 @@ void declaration()
     int *scores_dynamic = (int *)calloc(capacity, sizeof(int)); // Allocate memory for 10 integers
     scores_dynamic[0] = 100;
     printScores(capacity, scores_dynamic); //[ 100 0 0 ... ]
+}
+
+void reallocDemo()
+{
+
+    int *scores_dynamic = (int *)calloc(2, sizeof(int)); // Allocate memory for 10 integers
+    scores_dynamic[0] = 100;
+    scores_dynamic[1] = 99;
+    printf("Current elements of the array: ");
+    printScores(2, scores_dynamic);
+
+    int capacity = 0;
+    printf("Please enter new size [>2] to reallocate: ");
+    scanf("%d", &capacity);
+
+    scores_dynamic = realloc(scores_dynamic, capacity);
+
+    printScores(capacity, scores_dynamic); //[ 100 99 0 ... ]
 }
 
 void resizeDemo()
